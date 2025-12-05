@@ -2,7 +2,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 
 def ask_bot(question, retrieved_texts, api_key):
-    """Send question + context to LLM and get response."""
+    """Send question + context to LLM and get resp ."""
     context = "\n".join(retrieved_texts)
 
     template = """
