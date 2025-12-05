@@ -10,19 +10,33 @@ if not api_key:
 
 
 if __name__ == "__main__":
-    print(" chatbot ...")
+    print(" chatbot start here ...")
 
     texts = load_data()
     model, vectors = create_embeddings(texts)
 
     print("Ready! Type 'exit' or 'quit' to stop.\n")
 
-    while True:
-        user_q = input("You: ")
-        if user_q.lower() in ["exit", "quit"]:
-            break
+    try:
 
-        retrieved = retrieve_transactions(user_q, model, vectors, texts)
-        answer = ask_bot(user_q, retrieved, api_key)
+        while True:
+            user_q = input("You: ").strip()
 
-        print("\nBot:", answer, "\n")
+            if user_q.lower() in ["exit", "quit"]:
+                print("Bot: Goodbye!")
+                break
+
+            if not user_q:
+                print("\nBot: Plz Ask me.\n")
+                continue
+
+            # Retrieve similar chunks from vector store
+            retrieved = retrieve_transactions(user_q, model, vectors, texts)
+
+            # Ask LLM with retrieved context
+            answer = ask_bot(user_q, retrieved, api_key)
+
+            print("\nBot:", answer, "\n")
+    
+    except KeyboardInterrupt:
+        print("\nBot: Chat ended by user.\n")
