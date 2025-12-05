@@ -1,0 +1,23 @@
+# Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# .env file (API keys)
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

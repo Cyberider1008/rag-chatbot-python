@@ -1,0 +1,7 @@
+langchain
+langchain-community
+langchain-openai
+sentence-transformers
+numpy
+jsonschema
+python-dotenv
