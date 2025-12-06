@@ -29,25 +29,41 @@ st.subheader("Monthly Spending Analysis")
 
 with st.expander("Monthly Spending Analysis (Click to expand/collapse)"):
 
-    monthly_spend = df.groupby("month")["amount"].sum()
+    try:
+        if "month" not in df.columns or "amount" not in df.columns:
+            raise KeyError("Required columns 'month' or 'amount' not found in dataframe.")
 
-    # Line Chart
-    fig_line, ax_line = plt.subplots()
-    ax_line.plot(monthly_spend.index, monthly_spend.values, marker="o")
-    ax_line.set_title("Monthly Spend (Line Chart)")
-    ax_line.set_xlabel("Month")
-    ax_line.set_ylabel("Total Spend (₹)")
-    plt.xticks(rotation=45)
-    st.pyplot(fig_line)
+        monthly_spend = df.groupby("month")["amount"].sum()
 
-    # Bar Chart
-    fig_bar, ax_bar = plt.subplots()
-    ax_bar.bar(monthly_spend.index, monthly_spend.values)
-    ax_bar.set_title("Monthly Spend (Bar Chart)")
-    ax_bar.set_xlabel("Month")
-    ax_bar.set_ylabel("Total Spend (₹)")
-    plt.xticks(rotation=45)
-    st.pyplot(fig_bar)
+        if monthly_spend.empty:
+            raise ValueError("Monthly spending data is empty.")
+        
+        # LINE CHART    
+        fig_line, ax_line = plt.subplots()
+        ax_line.plot(monthly_spend.index, monthly_spend.values, marker="o")
+        ax_line.set_title("Monthly Spend (Line Chart)")
+        ax_line.set_xlabel("Month")
+        ax_line.set_ylabel("Total Spend (₹)")
+        plt.xticks(rotation=45)
+        st.pyplot(fig_line)
+
+        # BAR CHART 
+        fig_bar, ax_bar = plt.subplots()
+        ax_bar.bar(monthly_spend.index, monthly_spend.values)
+        ax_bar.set_title("Monthly Spend (Bar Chart)")
+        ax_bar.set_xlabel("Month")
+        ax_bar.set_ylabel("Total Spend (₹)")
+        plt.xticks(rotation=45)
+        st.pyplot(fig_bar)
+
+    except KeyError as e:
+        st.error(f" Missing column error: {e}")
+
+    except ValueError as e:
+        st.error(f" Data error: {e}")
+
+    except Exception as e:
+        st.error(f" Unexpected error occurred: {e}")
 
 # User input
 user_input = st.text_input("Ask your question:")
