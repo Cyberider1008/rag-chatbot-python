@@ -6,16 +6,16 @@ from chatbot.retrieval import retrieve
 from chatbot.llm import ask_bot
 
 load_dotenv()
-api_key = os.getenv("OPENAI_API_KEY")
+api_key = os.getenv("GOOGLE_API_KEY")
 if not api_key:
-    raise ValueError("OPENAI_API_KEY not found in .env file!")
+    raise ValueError("GOOGLE_API_KEY not found in .env file!")
 
 if __name__ == "__main__":
 
     print("Chatbot started...")
 
     # Load data and create embeddings
-    texts = load_data()
+    texts,_ = load_data()
     model, vectors = create_embeddings(texts)
 
     print("Ready! Type 'exit' or 'quit' to stop.\n")
