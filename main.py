@@ -15,7 +15,7 @@ if __name__ == "__main__":
     print("Chatbot started...")
 
     # Load data and create embeddings
-    texts,_ = load_data()
+    texts, _ = load_data()
     model, vectors = create_embeddings(texts)
 
     print("Ready! Type 'exit' or 'quit' to stop.\n")

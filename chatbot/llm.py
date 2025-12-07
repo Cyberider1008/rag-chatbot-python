@@ -1,6 +1,7 @@
 from langchain_core.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 
+
 def ask_bot(question, retrieved_texts, api_key):
     """Send question + context to Gemini LLM and get response."""
     context = "\n".join(retrieved_texts)

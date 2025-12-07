@@ -1,6 +1,8 @@
 import streamlit as st
-from dotenv import load_dotenv
+
 import os
+from dotenv import load_dotenv
+
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -10,11 +12,11 @@ from chatbot.retrieval import retrieve
 from chatbot.llm import ask_bot
 
 load_dotenv()
-api_key = os.getenv("OPENAI_API_KEY")
+api_key = os.getenv("GOOGLE_API_KEY")
 
 if not api_key:
-    st.error("⚠️ OPENAI_API_KEY not found in Render Environment!")
-    
+    st.error("GOOGLE_API_KEY not found in Render Environment!")
+
 # Initialize state
 if "loaded" not in st.session_state:
     st.session_state.loaded = False
@@ -22,9 +24,7 @@ if "loaded" not in st.session_state:
 
 st.title("RAG Chatbot")
 
-# -----------------------------
 # LOAD BUTTON (prevents crashes)
-# -----------------------------
 if st.button("Load Data & Embeddings"):
     with st.spinner("Loading data..."):
         texts, df = load_data()
@@ -32,14 +32,13 @@ if st.button("Load Data & Embeddings"):
         st.session_state.df = df
 
     with st.spinner("Creating embeddings (this may take some time)..."):
-        st.session_state.model, st.session_state.vectors = create_embeddings(texts)
+        st.session_state.model, st.session_state.vectors = create_embeddings(
+            texts)
 
     st.session_state.loaded = True
     st.success("Data & Embeddings Loaded!")
 
-# -----------------------------
 # MONTHLY CHARTS
-# -----------------------------
 if st.session_state.loaded:
     df = st.session_state.df
 
@@ -65,18 +64,17 @@ if st.session_state.loaded:
 else:
     st.info("Please click **Load Data & Embeddings** first.")
 
-# -----------------------------
 # CHATBOT
-# -----------------------------
 user_input = st.text_input("Ask your question:")
 
 if st.session_state.loaded and st.button("Send"):
-    retrieved = retrieve(user_input, st.session_state.model, st.session_state.vectors, st.session_state.texts)
+    retrieved = retrieve(user_input, st.session_state.model,
+                         st.session_state.vectors, st.session_state.texts)
     answer = ask_bot(user_input, retrieved, api_key)
     st.session_state.history.append({"user": user_input, "bot": answer})
 
 # History
-for chat in st.session_state.history:
+for chat in st.session_state.history[::-1]:
     st.markdown(f"**You:** {chat['user']}")
     st.markdown(f"**Bot:** {chat['bot']}")
     st.markdown("---")
