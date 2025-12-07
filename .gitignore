@@ -1,0 +1,79 @@
+# ------------------------------
+# Python
+# ------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+dist/
+build/
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Django
+*.log
+db.sqlite3
+media/
+staticfiles/
+static/
+
+# Django secrets
+.env
+*.env
+config/settings/local.py
+
+# ------------------------------
+# Node / React / Streamlit
+# ------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+.pnpm-debug.log
+
+# Build outputs
+/build
+/dist
+/.cache
+
+# Streamlit
+.streamlit/secrets.toml
+
+# ------------------------------
+# OS / Editor / IDE
+# ------------------------------
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# VSCode / PyCharm
+.vscode/
+.idea/
+
+# ------------------------------
+# Environment / Keys / Temp
+# ------------------------------
+.env.local
+.env.*.local
+*.pem
+*.key
+*.crt
+
+# Temporary files
+*.tmp
+*.temp

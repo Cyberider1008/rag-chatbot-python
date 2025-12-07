@@ -1,17 +1,14 @@
 import streamlit as st
 
-import os
-from dotenv import load_dotenv
-
-import matplotlib.pyplot as plt
-import pandas as pd
-
-from chatbot.data_loader import load_data
-from chatbot.embeddings import create_embeddings
-from chatbot.retrieval import retrieve
 from chatbot.llm import ask_bot
+from chatbot.retrieval import retrieve
+from chatbot.embeddings import load_prebuilt_embeddings
 
-load_dotenv()
+import os
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+
 api_key = os.environ.get("GOOGLE_API_KEY")
 
 if not api_key:
@@ -27,13 +24,9 @@ st.title("RAG Chatbot")
 # LOAD BUTTON (prevents crashes)
 if st.button("Load Data & Embeddings"):
     with st.spinner("Loading data..."):
-        texts, df = load_data()
+        st.session_state.model, st.session_state.vectors, texts, df = load_prebuilt_embeddings()
         st.session_state.texts = texts
         st.session_state.df = df
-
-    with st.spinner("Creating embeddings (this may take some time)..."):
-        st.session_state.model, st.session_state.vectors = create_embeddings(
-            texts)
 
     st.session_state.loaded = True
     st.success("Data & Embeddings Loaded!")
