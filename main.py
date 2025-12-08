@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from chatbot.data_loader import load_data
 from chatbot.embeddings import create_embeddings
-from chatbot.retrieval import retrieve
+from chatbot.retrieval import preprocess_vectors, retrieve
 from chatbot.llm import ask_bot
 
 load_dotenv()
@@ -20,6 +20,7 @@ if __name__ == "__main__":
 
     print("Ready! Type 'exit' or 'quit' to stop.\n")
 
+    norm_vectors = preprocess_vectors(vectors)
     try:
         while True:
             user_q = input("You: ").strip()
@@ -30,7 +31,7 @@ if __name__ == "__main__":
                 print("Bot: Please ask me something.\n")
                 continue
 
-            retrieved = retrieve(user_q, model, vectors, texts)
+            retrieved = retrieve(user_q, model, norm_vectors, texts)
             answer = ask_bot(user_q, retrieved, api_key)
             print("\nBot:", answer, "\n")
 
