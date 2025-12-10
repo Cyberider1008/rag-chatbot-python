@@ -38,6 +38,12 @@ Then open in browser:
 ```bash
 http://localhost:8501
 ```
+
+## Demo
+```bash
+https://huggingface.co/spaces/ashish1008/rag-chatbot
+```
+
 ## Example Questions to Ask
 - What is Amit’s total spending?
 - Show me Riya’s purchase history.
